@@ -11,6 +11,10 @@
     min-height: 400px;
     width: 100%;
     .item-poll-slider{
+      display: block;
+      overflow: hidden;
+      height: auto;
+      width: 100%;
       .btn{
         padding-left: 50px;
         padding-right: 50px;
@@ -18,6 +22,81 @@
         padding-bottom: 12px;
         border-radius: 0;
         font-size: 16px;
+      }
+      h3{
+        display: block;
+        overflow: hidden;
+        height: auto;
+        text-align: center;
+        padding: 15px;
+        padding-bottom: 0;
+      }
+      .description{
+        display: block;
+        overflow: hidden;
+        height: auto;
+        font-size: 14px;
+        color: #818181;
+        text-align: center;
+        padding-bottom: 30px;
+      }
+      .radio-item{
+        display: inline-block;
+        vertical-align: top;
+        padding: 15px;
+        position:relative;
+        text-align: center;
+        label{
+          font-weight: 400;
+          text-transform: uppercase;
+        }
+        .myradio {
+            vertical-align: top;
+            width: 17px;
+            height: 17px;
+            margin: 0 3px 0 0;
+          }
+          .myradio + label {
+            cursor: pointer;
+          }
+          .myradio:not(checked) {
+            position: absolute;
+            opacity: 0;
+          }
+          .myradio:not(checked) + label {
+            position: relative;
+            padding: 0 0 0 35px;
+          }
+          .myradio:not(checked) + label:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 22px;
+            height: 22px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background: #FFF;
+          }
+          .myradio:not(checked) + label:after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ea3e12;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.5);
+            opacity: 0;
+            transition: all .2s;
+          }
+          .myradio:checked + label:after {
+            opacity: 1;
+          }
+          .myradio:focus + label:before {
+            box-shadow: 0 0 3px 3px rgba(252,14,14,.3);
+          }
       }
     }
   }
