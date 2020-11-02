@@ -12,9 +12,6 @@ class pollSlider{
    //Результат расчетов
    _resultPrice = 0;
 
-   //Цена выбранного элемента
-   _itemPrice = 0;
-
   //Обьект слайдера
    _sliderObj = null;
 
@@ -47,6 +44,8 @@ class pollSlider{
 
    _options = null;
 
+   _btnFinishObj = null;
+
   //Конструктор класса принимает параметр класс обертка слайдов
   constructor( sliderClass , options)
   {
@@ -65,8 +64,8 @@ class pollSlider{
            btnPrevCls  :  options.btnPrevCls || 'btnPrev',
            btnStartCls :  options.btnStartCls || 'btnStart',
            btnNextCls  :  options.btnNextCls || 'btnNext',
-           controlCls  :  options.controlCls || 'control'
-
+           controlCls  :  options.controlCls || 'control',
+           btnFinishCls:  options.btnFinishCls || 'btnFinish',
         }
     }else{
 
@@ -80,12 +79,15 @@ class pollSlider{
          btnPrevCls  : 'btnPrev',
          btnStartCls : 'btnStart',
          btnNextCls  : 'btnNext',
-         controlCls  :  'control'
+         controlCls  : 'control',
+         btnFinishCls: 'btnFinish',
 
       }
     }
 
     //Создаем и заполняем наши данные
+
+     this._btnFinishObj = $('.'+ this._options.btnFinishCls);
 
      this._btnStartObj = $('.'+ this._options.btnStartCls);
 
@@ -135,6 +137,7 @@ class pollSlider{
     this._btnStartObj.bind('click', function (e) {self.start();});
     this._btnNextObj.bind('click', function (e) {self.nextSlide();});
     this._btnPrevObj.bind('click', function (e) {self.prevSlide();});
+    this._btnFinishObj.bind('click', function (e) {self.finish();});
 
     //Обновляем данные о прогресе
 
@@ -196,18 +199,6 @@ class pollSlider{
      if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
      this._resultPrice = value;
    }
-
-   get getItemPrice ()
-   {
-     return this._itemPrice
-   }
-
-   set setItemPrice ( value )
-   {
-     if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
-     this._itemPrice = value;
-   }
-
 
    bindRadio(value)
    {
@@ -282,14 +273,36 @@ class pollSlider{
     if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
     this._basePrice += value;
   }
+
+  finish()
+  {
+
+      var chRadio = this._sliderObj.find('input[type=radio]:checked');
+
+      var result = 0;
+
+      if(chRadio){
+
+        for (var i = 0; i < chRadio.length; i++) {
+
+           result += Number(chRadio[i].value);
+
+        }
+
+          this._resultPrice = result + Number(this._basePrice);
+
+          $('.price').html(this._resultPrice);
+          $('.result').toggleClass('hidden');
+          this._btnFinishObj.attr('disabled',true);
+          $('.price').animateNumber({ number: this._resultPrice });
+      }
+  }
 }
 
 //Пример вызова класса pollSlider
 (function($) {
 
-  let poll = new pollSlider('.wrapper-poll-slider',{
-    animateCls : 'animated fadeInLeft'
-  });
+  let poll = new pollSlider('.wrapper-poll-slider');
 
   poll.setBasePrice = 17000;
 
