@@ -64,7 +64,7 @@ class pollSlider{
    _prgAllCls = 'all-positions';
 
    //Обьект все позиции прогресса
-   _prgAllObj = null; 
+   _prgAllObj = null;
 
   //Конструктор класса принимает параметр класс обертка слайдов
   constructor( sliderClass )
@@ -113,6 +113,19 @@ class pollSlider{
 
      this._thisPos = this._sliderObj.children().first();
 
+    var elements = this._sliderObj.find('input[type=radio]');
+
+    var self = this;
+
+    for (var i = 0; i < elements.length; i++) {
+
+      elements[i].onclick = function(){
+
+          self.bindRadio(this);
+
+      };
+
+    }
      this.updateProgress();
 
   }
@@ -124,6 +137,7 @@ class pollSlider{
       this._controlObj.toggleClass('hidden');
       this._prgObj.toggleClass('hidden');
       this.updateProgress();
+      this._btnNextObj.attr('disabled',true);
    }
 
    updateProgress()
@@ -135,6 +149,7 @@ class pollSlider{
       }else{
           this._btnPrevObj.attr('disabled',false);
       }
+
    }
 
    get getMaxSlides ()
@@ -237,6 +252,29 @@ class pollSlider{
      }
    }
 
+   bindRadio(value)
+   {
+     this._btnNextObj.attr('disabled',false);
+   }
+
+   checkAnswers( value )
+   {
+      if( value ){
+
+        var isRadioClick = value.find('input[type=radio]').is(':checked');
+
+        if(isRadioClick){
+
+          this._btnNextObj.attr('disabled',false);
+
+        }else{
+
+          this._btnNextObj.attr('disabled',true);
+
+        }
+      }
+   }
+
   nextSlide()
   {
     this._thPosition ++;
@@ -248,6 +286,7 @@ class pollSlider{
       this._thisPos = this._thisPos.next();
       this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
       this._thisPos.removeClass('hidden').addClass('active '+ this._amimateCls);
+      this.checkAnswers(this._thisPos);
 
     }else {
 
@@ -256,6 +295,7 @@ class pollSlider{
       this._prgObj.toggleClass('hidden');
       this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
       this._thisPos.removeClass('hidden').addClass('active '+ this._amimateCls);
+      this.checkAnswers(this._thisPos);
 
     }
 
@@ -264,6 +304,7 @@ class pollSlider{
   prevSlide()
   {
 
+    this.checkAnswers(this._thisPos);
 
     if(this._thPosition > 2){
 
@@ -274,6 +315,7 @@ class pollSlider{
       this._thisPos.removeClass('hidden').addClass('active ' + this._amimateCls);
 
       this.updateProgress();
+      this.checkAnswers(this._thisPos);
     }
 
   }
