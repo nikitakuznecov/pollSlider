@@ -21,21 +21,6 @@ class pollSlider{
   //Обьект текущего слайда
    _thisPos = null;
 
-   //Применяемая анимация при перелистывании (anamate.css)
-   _amimateCls = 'animated fadeIn';
-
-   //Класс блока управления
-   _controlCls = 'control';
-
-   //Класс кнопки вперед
-   _btnNextCls = 'btnNext';
-
-   //Класс кнопки старт
-   _btnStartCls = 'btnStart';
-
-  //Класс кнопки назад
-   _btnPrevCls = 'btnPrev';
-
   //Обьект блока управления
    _controlObj = null;
 
@@ -48,68 +33,74 @@ class pollSlider{
   //Обьект управления назад
    _btnPrevObj = null;
 
-  //Класс блока прогресс
-   _prgCls = 'progress-all';
-
    //Обьект блока прогресс
    _prgObj = null;
-
-   //Класс текущей позиции
-   _prgThisCls = 'this-position';
 
    //Обьект текущей позиции прогресса
    _prgThisObj = null;
 
-   //Класс разделитель позиций
-   _prgDelimCls = 'delimiter';
-
    //Обьект разделителя прогресса
    _prgDelimObj = null;
-
-   //Класс все позиции
-   _prgAllCls = 'all-positions';
 
    //Обьект все позиции прогресса
    _prgAllObj = null;
 
+   _options = null;
+
   //Конструктор класса принимает параметр класс обертка слайдов
-  constructor( sliderClass )
+  constructor( sliderClass , options)
   {
+    if(options){
+
+        this._options = {
+
+           animateCls  :  options.animateCls || 'animated fadeIn',
+           prgAllCls   :  options.prgAllCls || 'all-positions',
+           prgDelimCls :  options.prgDelimCls || 'delimiter',
+           prgThisCls  :  options.prgThisCls || 'this-position',
+           prgCls      :  options.prgCls || 'progress-all',
+           btnPrevCls  :  options.btnPrevCls || 'btnPrev',
+           btnStartCls :  options.btnStartCls || 'btnStart',
+           btnNextCls  :  options.btnNextCls || 'btnNext',
+           controlCls  :  options.controlCls || 'control'
+
+        }
+    }else{
+
+      this._options = {
+
+         animateCls  : 'animated fadeIn',
+         prgAllCls   : 'all-positions',
+         prgDelimCls : 'delimiter',
+         prgThisCls  : 'this-position',
+         prgCls      : 'progress-all',
+         btnPrevCls  : 'btnPrev',
+         btnStartCls : 'btnStart',
+         btnNextCls  : 'btnNext',
+         controlCls  :  'control'
+
+      }
+    }
+
      if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
-
-     if($('.'+ this._controlCls).length == 0) throw new Error("Ошибка, контейнер управления отсутствует на странице");
-
-     if($('.'+ this._btnNextCls).length == 0) throw new Error("Ошибка, управление вперед отсутствует на странице");
-
-     if($('.'+ this._btnPrevCls).length == 0) throw new Error("Ошибка, управление назад отсутствует на странице");
-
-     if($('.'+ this._prgCls).length == 0) throw new Error("Ошибка, контейнер прогресса отсутствует на странице");
-
-     if($('.'+ this._prgDelimCls).length == 0) throw new Error("Ошибка, контейнер разделителя прогресса отсутствует на странице");
-
-     if($('.'+ this._prgThisCls).length == 0) throw new Error("Ошибка, контейнер текущей позиции прогресса отсутствует на странице");
-
-     if($('.'+ this._prgAllCls).length == 0) throw new Error("Ошибка, контейнер всех позиций прогресса отсутствует на странице");
-
-     if($('.'+ this._btnStartCls).length == 0) throw new Error("Ошибка, управление старт отсутствует на странице");
 
     //Создаем и заполняем наши данные
 
-     this._btnStartObj = $('.'+ this._btnStartCls);
+     this._btnStartObj = $('.'+ this._options.btnStartCls);
 
-     this._prgObj = $('.'+ this._prgCls);
+     this._prgObj = $('.'+ this._options.prgCls);
 
-     this._prgThisObj = $('.'+ this._prgThisCls);
+     this._prgThisObj = $('.'+ this._options.prgThisCls);
 
-     this._prgDelimObj = $('.'+ this._prgDelimCls);
+     this._prgDelimObj = $('.'+ this._options.prgDelimCls);
 
-     this._prgAllObj = $('.'+ this._prgAllCls);
+     this._prgAllObj = $('.'+ this._options.prgAllCls);
 
-     this._controlObj = $('.'+ this._controlCls);
+     this._controlObj = $('.'+ this._options.controlCls);
 
-     this._btnNextObj = $('.'+ this._btnNextCls);
+     this._btnNextObj = $('.'+ this._options.btnNextCls);
 
-     this._btnPrevObj = $('.'+ this._btnPrevCls);
+     this._btnPrevObj = $('.'+ this._options.btnPrevCls);
 
      this._maxSlides = $(sliderClass).children().length;
 
@@ -119,9 +110,9 @@ class pollSlider{
 
      this._sliderObj = $(sliderClass);
 
-     this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
+     this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
 
-     this._sliderObj.children().first().removeClass('hidden ' + this._amimateCls).addClass('active ' + this._amimateCls);
+     this._sliderObj.children().first().removeClass('hidden ' + this._options.animateCls).addClass('active ' + this._animateCls);
 
      this._thisPos = this._sliderObj.children().first();
 
@@ -216,68 +207,6 @@ class pollSlider{
      this._itemPrice = value;
    }
 
-   set setAnimateCls ( value )
-   {
-     if (value){
-       this._amimateCls = value;
-     }
-   }
-
-   set setControlCls ( value )
-   {
-     if (value){
-       this._controlCls = value;
-     }
-   }
-
-   set setBtnNextCls ( value )
-   {
-     if (value){
-       this._btnNextCls = value;
-     }
-   }
-
-   set setBtnPrevCls ( value )
-   {
-     if (value){
-       this._btnPrevCls = value;
-     }
-   }
-
-   set setPrgCls ( value )
-   {
-     if (value){
-       this._prgCls = value;
-     }
-   }
-
-   set setPrgThisCls ( value )
-   {
-     if (value){
-       this._prgThisCls = value;
-     }
-   }
-
-   set setPrgDelimCls ( value )
-   {
-     if (value){
-       this._prgDelimCls = value;
-     }
-   }
-
-   set setPrgAllCls ( value )
-   {
-     if (value){
-       this._prgAllCls = value;
-     }
-   }
-
-   set setBntStartCls(value)
-   {
-     if (value){
-       this._btnStartCls = value;
-     }
-   }
 
    bindRadio(value)
    {
@@ -311,8 +240,8 @@ class pollSlider{
     if(this._thPosition !== this._maxSlides){
 
       this._thisPos = this._thisPos.next();
-      this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active '+ this._amimateCls);
+      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
+      this._thisPos.removeClass('hidden').addClass('active '+ this._options.animateCls);
       this.checkAnswers(this._thisPos);
 
     }else {
@@ -320,8 +249,8 @@ class pollSlider{
       this._controlObj.toggleClass('hidden');
       this._thisPos = this._thisPos.next();
       this._prgObj.toggleClass('hidden');
-      this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active '+ this._amimateCls);
+      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
+      this._thisPos.removeClass('hidden').addClass('active '+ this._options.animateCls);
       this.checkAnswers(this._thisPos);
 
     }
@@ -338,8 +267,8 @@ class pollSlider{
       this._thPosition --;
 
       this._thisPos = this._thisPos.prev();
-      this._sliderObj.children().removeClass('hidden active ' + this._amimateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active ' + this._amimateCls);
+      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
+      this._thisPos.removeClass('hidden').addClass('active ' + this._options.animateCls);
 
       this.updateProgress();
       this.checkAnswers(this._thisPos);
@@ -357,8 +286,11 @@ class pollSlider{
 //Пример вызова класса pollSlider
 (function($) {
 
-  let poll = new pollSlider('.wrapper-poll-slider');
+  let poll = new pollSlider('.wrapper-poll-slider',{
+    animateCls : 'animated fadeInLeft'
+  });
 
   poll.setBasePrice = 17000;
+
 
 })(jQuery);
