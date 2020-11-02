@@ -274,6 +274,11 @@ class pollSlider{
     this._basePrice += value;
   }
 
+  formatPrice(data) {
+      var price = Number.prototype.toFixed.call(parseFloat(data) || 0, 2);
+      return price.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+  }
+
   finish()
   {
 
@@ -291,9 +296,10 @@ class pollSlider{
 
           this._resultPrice = result + Number(this._basePrice);
 
-          $('.price').html(this._resultPrice);
+          $('.price').html(this.formatPrice(this._resultPrice));
           $('.result').toggleClass('hidden');
           this._btnFinishObj.attr('disabled',true);
+          $('.title').toggleClass('hidden');
           $('.price').animateNumber({ number: this._resultPrice });
       }
   }
