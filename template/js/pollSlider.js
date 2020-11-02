@@ -64,7 +64,7 @@ class pollSlider{
    _prgAllCls = 'all-positions';
 
    //Обьект все позиции прогресса
-   _prgAllObj = null;
+   _prgAllObj = null; 
 
   //Конструктор класса принимает параметр класс обертка слайдов
   constructor( sliderClass )
