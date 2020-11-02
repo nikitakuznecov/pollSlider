@@ -1,0 +1,56 @@
+// out: ../css/pollSlider.css, sourcemap: true, compress: true
+
+.pollSlider{
+  display:block;
+  overflow: hidden;
+  height:auto;
+  .wrapper-poll-slider{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    width: 100%;
+    .item-poll-slider{
+      .btn{
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border-radius: 0;
+        font-size: 16px;
+      }
+    }
+  }
+  .control{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    .btn{
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      border-radius: 0;
+    }
+  }
+  .progress-all{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e2e2e2;
+    span{
+      display:inline-block;
+      font-size: 16px;
+      padding-left: 5px;
+      padding-right: 5px;
+      &:first-child{
+        padding-left: 0;
+      }
+      &:last-child{
+        padding-right: 0;
+      }
+    }
+  }
+}
