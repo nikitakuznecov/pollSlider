@@ -50,6 +50,9 @@ class pollSlider{
   //Конструктор класса принимает параметр класс обертка слайдов
   constructor( sliderClass , options)
   {
+
+    if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
+
     if(options){
 
         this._options = {
@@ -81,8 +84,6 @@ class pollSlider{
 
       }
     }
-
-     if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
 
     //Создаем и заполняем наши данные
 
