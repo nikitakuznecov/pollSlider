@@ -30,6 +30,9 @@ class pollSlider{
    //Класс кнопки вперед
    _btnNextCls = 'btnNext';
 
+   //Класс кнопки старт
+   _btnStartCls = 'btnStart';
+
   //Класс кнопки назад
    _btnPrevCls = 'btnPrev';
 
@@ -38,6 +41,9 @@ class pollSlider{
 
   //Обьект управления вперед
    _btnNextObj = null;
+
+   //Обьект управления Старт
+   _btnStartObj = null;
 
   //Обьект управления назад
    _btnPrevObj = null;
@@ -85,6 +91,12 @@ class pollSlider{
 
      if($('.'+ this._prgAllCls).length == 0) throw new Error("Ошибка, контейнер всех позиций прогресса отсутствует на странице");
 
+     if($('.'+ this._btnStartCls).length == 0) throw new Error("Ошибка, управление старт отсутствует на странице");
+
+    //Создаем и заполняем наши данные
+
+     this._btnStartObj = $('.'+ this._btnStartCls);
+
      this._prgObj = $('.'+ this._prgCls);
 
      this._prgThisObj = $('.'+ this._prgThisCls);
@@ -113,6 +125,8 @@ class pollSlider{
 
      this._thisPos = this._sliderObj.children().first();
 
+    //Установка событий на элементы
+
     var elements = this._sliderObj.find('input[type=radio]');
 
     var self = this;
@@ -126,7 +140,13 @@ class pollSlider{
       };
 
     }
-     this.updateProgress();
+    this._btnStartObj.bind('click', function (e) {self.start();});
+    this._btnNextObj.bind('click', function (e) {self.nextSlide();});
+    this._btnPrevObj.bind('click', function (e) {self.prevSlide();});
+
+    //Обновляем данные о прогресе
+
+    this.updateProgress();
 
   }
 
@@ -252,6 +272,13 @@ class pollSlider{
      }
    }
 
+   set setBntStartCls(value)
+   {
+     if (value){
+       this._btnStartCls = value;
+     }
+   }
+
    bindRadio(value)
    {
      this._btnNextObj.attr('disabled',false);
@@ -333,11 +360,5 @@ class pollSlider{
   let poll = new pollSlider('.wrapper-poll-slider');
 
   poll.setBasePrice = 17000;
-
-  $( ".btnStart" ).click(function() {poll.start();});
-
-  $( ".btnPrev" ).click(function() {poll.prevSlide();});
-
-  $( ".btnNext" ).click(function() {poll.nextSlide();});
 
 })(jQuery);
