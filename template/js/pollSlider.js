@@ -50,7 +50,7 @@ class pollSlider{
   constructor( sliderClass , options)
   {
 
-    //if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
+    if ($(sliderClass).length > 0){
 
     if(options){
 
@@ -142,7 +142,7 @@ class pollSlider{
     //Обновляем данные о прогресе
 
     this.updateProgress();
-
+   }
   }
 
    start()
