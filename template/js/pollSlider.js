@@ -1,60 +1,60 @@
 class pollSlider{
 
    //Максимальное ко-во слайдов
-   _maxSlides = 0;
+   #_maxSlides = 0;
 
    //Номер текущей позиции
-   _thPosition = 1;
+   #_thPosition = 1;
 
    //Базовая цена
-   _basePrice = 0
+   #_basePrice = 0;
 
    //Результат расчетов
-   _resultPrice = 0;
+   #_resultPrice = 0;
 
   //Обьект слайдера
-   _sliderObj = null;
+   #_sliderObj = null;
 
   //Обьект текущего слайда
-   _thisPos = null;
+   #_thisPos = null;
 
   //Обьект блока управления
-   _controlObj = null;
+   #_controlObj = null;
 
   //Обьект управления вперед
-   _btnNextObj = null;
+   #_btnNextObj = null;
 
    //Обьект управления Старт
-   _btnStartObj = null;
+   #_btnStartObj = null;
 
   //Обьект управления назад
-   _btnPrevObj = null;
+   #_btnPrevObj = null;
 
    //Обьект блока прогресс
-   _prgObj = null;
+   #_prgObj = null;
 
    //Обьект текущей позиции прогресса
-   _prgThisObj = null;
+   #_prgThisObj = null;
 
    //Обьект разделителя прогресса
-   _prgDelimObj = null;
+   #_prgDelimObj = null;
 
    //Обьект все позиции прогресса
-   _prgAllObj = null;
+   #_prgAllObj = null;
 
-   _options = null;
+   #_options = null;
 
-   _btnFinishObj = null;
+   #_btnFinishObj = null;
 
   //Конструктор класса принимает параметр класс обертка слайдов
   constructor( sliderClass , options)
   {
 
-    if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
+    //if ($(sliderClass).length == 0) throw new Error("Ошибка, класс контейнер слайдера не указан, либо отсутствует на странице");
 
     if(options){
 
-        this._options = {
+        this.#_options = {
 
            animateCls  :  options.animateCls || 'animated fadeIn',
            prgAllCls   :  options.prgAllCls || 'all-positions',
@@ -69,7 +69,7 @@ class pollSlider{
         }
     }else{
 
-      this._options = {
+      this.#_options = {
 
          animateCls  : 'animated fadeIn',
          prgAllCls   : 'all-positions',
@@ -87,41 +87,41 @@ class pollSlider{
 
     //Создаем и заполняем наши данные
 
-     this._btnFinishObj = $('.'+ this._options.btnFinishCls);
+     this.#_btnFinishObj = $('.'+ this.#_options.btnFinishCls);
 
-     this._btnStartObj = $('.'+ this._options.btnStartCls);
+     this.#_btnStartObj = $('.'+ this.#_options.btnStartCls);
 
-     this._prgObj = $('.'+ this._options.prgCls);
+     this.#_prgObj = $('.'+ this.#_options.prgCls);
 
-     this._prgThisObj = $('.'+ this._options.prgThisCls);
+     this.#_prgThisObj = $('.'+ this.#_options.prgThisCls);
 
-     this._prgDelimObj = $('.'+ this._options.prgDelimCls);
+     this.#_prgDelimObj = $('.'+ this.#_options.prgDelimCls);
 
-     this._prgAllObj = $('.'+ this._options.prgAllCls);
+     this.#_prgAllObj = $('.'+ this.#_options.prgAllCls);
 
-     this._controlObj = $('.'+ this._options.controlCls);
+     this.#_controlObj = $('.'+ this.#_options.controlCls);
 
-     this._btnNextObj = $('.'+ this._options.btnNextCls);
+     this.#_btnNextObj = $('.'+ this.#_options.btnNextCls);
 
-     this._btnPrevObj = $('.'+ this._options.btnPrevCls);
+     this.#_btnPrevObj = $('.'+ this.#_options.btnPrevCls);
 
-     this._maxSlides = $(sliderClass).children().length;
+     this.#_maxSlides = $(sliderClass).children().length;
 
-     this._controlObj.toggleClass('hidden');
+     this.#_controlObj.toggleClass('hidden');
 
-     this._prgObj.toggleClass('hidden');
+     this.#_prgObj.toggleClass('hidden');
 
-     this._sliderObj = $(sliderClass);
+     this.#_sliderObj = $(sliderClass);
 
-     this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
+     this.#_sliderObj.children().removeClass('hidden active ' + this.#_options.animateCls).addClass('hidden');
 
-     this._sliderObj.children().first().removeClass('hidden ' + this._options.animateCls).addClass('active ' + this._animateCls);
+     this.#_sliderObj.children().first().removeClass('hidden ' + this.#_options.animateCls).addClass('active ' + this._animateCls);
 
-     this._thisPos = this._sliderObj.children().first();
+     this.#_thisPos = this.#_sliderObj.children().first();
 
     //Установка событий на элементы
 
-    var elements = this._sliderObj.find('input[type=radio]');
+    var elements = this.#_sliderObj.find('input[type=radio]');
 
     var self = this;
 
@@ -134,10 +134,10 @@ class pollSlider{
       };
 
     }
-    this._btnStartObj.bind('click', function (e) {self.start();});
-    this._btnNextObj.bind('click', function (e) {self.nextSlide();});
-    this._btnPrevObj.bind('click', function (e) {self.prevSlide();});
-    this._btnFinishObj.bind('click', function (e) {self.finish();});
+    this.#_btnStartObj.bind('click', function (e) {self.start();});
+    this.#_btnNextObj.bind('click', function (e) {self.nextSlide();});
+    this.#_btnPrevObj.bind('click', function (e) {self.prevSlide();});
+    this.#_btnFinishObj.bind('click', function (e) {self.finish();});
 
     //Обновляем данные о прогресе
 
@@ -149,60 +149,60 @@ class pollSlider{
    {
       this.nextSlide();
 
-      this._controlObj.toggleClass('hidden');
-      this._prgObj.toggleClass('hidden');
+      this.#_controlObj.toggleClass('hidden');
+      this.#_prgObj.toggleClass('hidden');
       this.updateProgress();
-      this._btnNextObj.attr('disabled',true);
+      this.#_btnNextObj.attr('disabled',true);
    }
 
    updateProgress()
    {
-      this._prgThisObj.html(this._thPosition);
-      this._prgAllObj.html(this._maxSlides);
-      if(this._thPosition == 2){
-        this._btnPrevObj.attr('disabled',true);
+      this.#_prgThisObj.html(this.#_thPosition);
+      this.#_prgAllObj.html(this.#_maxSlides);
+      if(this.#_thPosition == 2){
+        this.#_btnPrevObj.attr('disabled',true);
       }else{
-          this._btnPrevObj.attr('disabled',false);
+          this.#_btnPrevObj.attr('disabled',false);
       }
 
    }
 
    get getMaxSlides ()
    {
-     return this._maxSlides
+     return this.#_maxSlides
    }
 
 
    get getThisPosition ()
    {
-     return this._thPosition
+     return this.#_thPosition
    }
 
    get getBasePrice ()
    {
-     return this._basePrice
+     return this.#_basePrice
    }
 
    set setBasePrice ( value )
    {
      if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
-     this._basePrice = value;
+     this.#_basePrice = value;
    }
 
    get getresultPrice ()
    {
-     return this._resultPrice
+     return this.#_resultPrice
    }
 
    set setResultPrice ( value )
    {
      if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
-     this._resultPrice = value;
+     this.#_resultPrice = value;
    }
 
    bindRadio(value)
    {
-     this._btnNextObj.attr('disabled',false);
+     this.#_btnNextObj.attr('disabled',false);
    }
 
    checkAnswers( value )
@@ -213,11 +213,11 @@ class pollSlider{
 
         if(isRadioClick){
 
-          this._btnNextObj.attr('disabled',false);
+          this.#_btnNextObj.attr('disabled',false);
 
         }else{
 
-          this._btnNextObj.attr('disabled',true);
+          this.#_btnNextObj.attr('disabled',true);
 
         }
       }
@@ -225,25 +225,25 @@ class pollSlider{
 
   nextSlide()
   {
-    this._thPosition ++;
+    this.#_thPosition ++;
 
     this.updateProgress();
 
-    if(this._thPosition !== this._maxSlides){
+    if(this.#_thPosition !== this.#_maxSlides){
 
-      this._thisPos = this._thisPos.next();
-      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active '+ this._options.animateCls);
-      this.checkAnswers(this._thisPos);
+      this.#_thisPos = this.#_thisPos.next();
+      this.#_sliderObj.children().removeClass('hidden active ' + this.#_options.animateCls).addClass('hidden');
+      this.#_thisPos.removeClass('hidden').addClass('active '+ this.#_options.animateCls);
+      this.checkAnswers(this.#_thisPos);
 
     }else {
 
-      this._controlObj.toggleClass('hidden');
-      this._thisPos = this._thisPos.next();
-      this._prgObj.toggleClass('hidden');
-      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active '+ this._options.animateCls);
-      this.checkAnswers(this._thisPos);
+      this.#_controlObj.toggleClass('hidden');
+      this.#_thisPos = this.#_thisPos.next();
+      this.#_prgObj.toggleClass('hidden');
+      this.#_sliderObj.children().removeClass('hidden active ' + this.#_options.animateCls).addClass('hidden');
+      this.#_thisPos.removeClass('hidden').addClass('active '+ this.#_options.animateCls);
+      this.checkAnswers(this.#_thisPos);
 
     }
 
@@ -252,18 +252,18 @@ class pollSlider{
   prevSlide()
   {
 
-    this.checkAnswers(this._thisPos);
+    this.checkAnswers(this.#_thisPos);
 
-    if(this._thPosition > 2){
+    if(this.#_thPosition > 2){
 
-      this._thPosition --;
+      this.#_thPosition --;
 
-      this._thisPos = this._thisPos.prev();
-      this._sliderObj.children().removeClass('hidden active ' + this._options.animateCls).addClass('hidden');
-      this._thisPos.removeClass('hidden').addClass('active ' + this._options.animateCls);
+      this.#_thisPos = this.#_thisPos.prev();
+      this.#_sliderObj.children().removeClass('hidden active ' + this.#_options.animateCls).addClass('hidden');
+      this.#_thisPos.removeClass('hidden').addClass('active ' + this.#_options.animateCls);
 
       this.updateProgress();
-      this.checkAnswers(this._thisPos);
+      this.checkAnswers(this.#_thisPos);
     }
 
   }
@@ -271,7 +271,7 @@ class pollSlider{
   addInBasePrice( value )
   {
     if (value < 0) throw new Error("Ошибка,  значение не может быть отрицательным");
-    this._basePrice += value;
+    this.#_basePrice += value;
   }
 
   formatPrice(data) {
@@ -282,7 +282,7 @@ class pollSlider{
   finish()
   {
 
-      var chRadio = this._sliderObj.find('input[type=radio]:checked');
+      var chRadio = this.#_sliderObj.find('input[type=radio]:checked');
 
       var result = 0;
 
@@ -294,13 +294,13 @@ class pollSlider{
 
         }
 
-          this._resultPrice = result + Number(this._basePrice);
+          this.#_resultPrice = result + Number(this.#_basePrice);
 
-          $('.price').html(this.formatPrice(this._resultPrice));
+          $('.price').html(this.formatPrice(this.#_resultPrice));
           $('.result').toggleClass('hidden');
-          this._btnFinishObj.attr('disabled',true);
+          this.#_btnFinishObj.attr('disabled',true);
           $('.title').toggleClass('hidden');
-          $('.price').animateNumber({ number: this._resultPrice });
+          $('.price').animateNumber({ number: this.#_resultPrice });
       }
   }
 }
