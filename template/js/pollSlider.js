@@ -121,7 +121,7 @@ class pollSlider{
 
     //Установка событий на элементы
 
-    var elements = this.#_sliderObj.find('input[type=radio]');
+    var elements = this.#_sliderObj.find('input');
 
     var self = this;
 
@@ -202,7 +202,7 @@ class pollSlider{
 
    bindRadio(value)
    {
-     this.#_btnNextObj.attr('disabled',false);
+     this.checkAnswers(this.#_thisPos);
    }
 
    checkAnswers( value )
@@ -210,8 +210,10 @@ class pollSlider{
       if( value ){
 
         var isRadioClick = value.find('input[type=radio]').is(':checked');
-
-        if(isRadioClick){
+        var isCheckBoxClick = value.find('input[type=checkbox]').is(':checked');
+        var isRangeClick = value.find('input[type=range]').val();
+        
+        if(isRadioClick || isCheckBoxClick || isRangeClick > 0){
 
           this.#_btnNextObj.attr('disabled',false);
 
